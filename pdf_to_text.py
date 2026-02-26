@@ -49,8 +49,8 @@ def convert_pdf_to_txt(fpath):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i', '--input_dir', default="./data/data/tar/bench=taphc/data", help='Path to pdf files directory', required=True)
-    parser.add_argument('-o', '--output_dir', default="./data/text/bench=taphc/text", help='Path to output directory',)
+    parser.add_argument('-i', '--input_dir', default="./data/bench=taphc/data", help='Path to pdf files directory', required=True)
+    parser.add_argument('-o', '--output_dir', default="./data/bench=taphc/text", help='Path to output directory',)
 
     args = parser.parse_args()
     input_dir = args.input_dir

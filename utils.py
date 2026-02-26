@@ -7,9 +7,9 @@ import re
 import fitz
 from spellchecker import SpellChecker
 from collections import Counter
-spell = SpellChecker(language="en")
 
-from file_utils import read_file
+spell = SpellChecker(language="en")
+from file_utils import read_file, read_file_lines
 
 
 def check_is_ascii(text):
@@ -72,7 +72,7 @@ def list_misspelled_words(text):
     misspelled = spell.unknown(set(words_lower))
     return sorted(misspelled)
 
-    
+
 def list_misspelled_words_with_counts(text):
     """
     Return a frequency distribution of misspelled words
@@ -132,6 +132,14 @@ def test_spellings_with_count():
     [('telangana', 3), ('hanumantha', 2), ('sujana', 2), ('honourable', 2), ('cum', 2), ('chandrayangutta', 2), ('rao', 2), ('smt', 2), ('bnss', 1), ('sho', 1), ("i'", 1), ('sd', 1), ('respon', 1), ('laneous', 1), ('tion', 1), ('ll', 1), ('petitioneryaccused', 1), ('ingly', 1), ('xxilt', 1), ('lrfan', 1), ('jubitee', 1), ('crlp', 1), ('tetangana', 1), ('ccs', 1), ('hari', 1), ('juose', 1), ('barkas', 1), ('fetb', 1), ('itl', 1), ("yi'", 1), ('sio', 1), ('onat', 1), ("c'", 1), ('bandlaguda', 1), ('occ', 1), ('additionat', 1), ('chiei', 1), ('mahmood', 1), ('optjc', 1), ('rl', 1), ('copyii', 1), ('cc', 1), ('dismlssing', 1), ('addrttonat', 1), ('miscel', 1), ('lsr', 1), ('prasad', 1), ('iii', 1), ('famity', 1)]
 
     [('tauseef', 4), ('app', 4), ('offences', 2), ('nos', 2), ('gangakhed', 2), ('pedneker', 2), ('parbhani', 2), ('arun', 2), ('deore', 1), ('coram', 1), ('purushottam', 1), ('tak', 1), ('prakash', 1), ('facie', 1), ('shailendra', 1), ('anr', 1), ('cri', 1), ('bhc', 1), ('hereinabove', 1), ('ii', 1), ('shirse', 1), ('pandurang', 1), ('deshmukh', 1), ('santosh', 1), ('karnani', 1), ('lotan', 1), ('mahesh', 1), ('iii', 1), ('vithal', 1), ('baburaon', 1), ('gangakhedkar', 1)]
+
+    [('chandrayangutta', 2), ('barkas', 1), ('respon', 1), ('iii', 1), ('bandlaguda', 1), ('onat', 1), ('ccs', 1), ('addrttonat', 1), ('tion', 1), ('lrfan', 1), ('occ', 1), ('lsr', 1), ('juose', 1), ("c'", 1), ('ll', 1), ('ingly', 1), ('crlp', 1), ('fetb', 1), ('chiei', 1), ("i'", 1), ("yi'", 1), ('miscel', 1), ('bnss', 1), ('tetangana', 1), ('mahmood', 1), ('optjc', 1), ('dismlssing', 1), ('jubitee', 1), ('sio', 1), ('additionat', 1), ('xxilt', 1), ('famity', 1), ('petitioneryaccused', 1), ('itl', 1), ('laneous', 1), ('cc', 1), ('copyii', 1), ('sho', 1)]
+
+    [('app', 4), ('pedneker', 2), ('nos', 2), ('offences', 2), ('gangakhed', 2), ('shirse', 1), ('iii', 1), ('tak', 1), ('karnani', 1), ('baburaon', 1), ('deore', 1), ('coram', 1), ('cri', 1), ('gangakhedkar', 1), ('anr', 1), ('facie', 1), ('hereinabove', 1), ('bhc', 1), ('ii', 1)]
+
+    [('copyii', 1), ('laneous', 1), ('sho', 1), ("c'", 1), ('jubitee', 1), ('tetangana', 1), ('dismlssing', 1), ('optjc', 1), ('fetb', 1), ('crlp', 1), ("i'", 1), ('sio', 1), ("yi'", 1), ('iii', 1), ('xxilt', 1), ('additionat', 1), ('itl', 1), ('juose', 1), ('occ', 1), ('ccs', 1), ('miscel', 1), ('lrfan', 1), ('petitioneryaccused', 1), ('ll', 1), ('mahmood', 1), ('bnss', 1), ('addrttonat', 1), ('cc', 1), ('lsr', 1), ('famity', 1), ('ingly', 1), ('respon', 1), ('onat', 1), ('chiei', 1), ('tion', 1)]
+
+    [('app', 4), ('pedneker', 2), ('gangakhed', 2), ('nos', 2), ('offences', 2), ('tak', 1), ('hereinabove', 1), ('cri', 1), ('deore', 1), ('bhc', 1), ('anr', 1), ('baburaon', 1), ('iii', 1), ('karnani', 1), ('gangakhedkar', 1), ('coram', 1), ('facie', 1), ('shirse', 1), ('ii', 1)]
     """
     test_file1 = "./data/bench=taphc/text/HBHC010000032025_1_2025-01-10.txt"  # Flagged as scanned file
     test_file2 = "./data/bench=hcaurdb/text/HCBM030000012025_1_2025-02-04.txt"  # True digital file
@@ -146,7 +154,12 @@ def main():
 
     # Test spellings
     # test_spellings()
+
     # Test adding words to checker
+    add_words_list = read_file_lines('./data/regions.txt') + read_file_lines('./data/name_list.txt')
+    add_words_list = [item.lower().strip() for item in add_words_list]
+    add_words_to_spell_checker(add_words_list)
+    
     test_spellings_with_count()
 
 
