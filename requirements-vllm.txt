@@ -1,0 +1,12 @@
+# Minimal deps for zero_shot_label.py with vLLM
+#
+# Notes:
+# - vLLM is primarily intended for CUDA GPUs; on non-CUDA machines the script
+#   will automatically fall back to Transformers.
+# - If vLLM install fails on your platform, you can omit it and still run.
+
+transformers>=4.37.0
+nltk>=3.8.0
+torch>=2.0.0
+accelerate>=0.25.0
+vllm>=0.4.0
